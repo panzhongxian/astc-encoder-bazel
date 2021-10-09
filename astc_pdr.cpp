@@ -429,8 +429,6 @@ int astc_compress_and_compare(const std::string& profile_str,
       ASTCENC_STAGE_LD_NCOMP | ASTCENC_STAGE_ST_COMP | ASTCENC_STAGE_ST_NCOMP |
       ASTCENC_STAGE_COMPRESS | ASTCENC_STAGE_DECOMPRESS;
 
-  double start_time = get_time();
-
   astcenc_profile profile = ASTCENC_PRF_LDR_SRGB;
   int modes_count = sizeof(modes) / sizeof(modes[0]);
   for (int i = 0; i < modes_count; i++) {
@@ -508,7 +506,6 @@ int astc_compress_and_compare(const std::string& profile_str,
     return 1;
   }
 
-  double start_coding_time = get_time();
   double image_size = 0.0;
   if (image_uncomp_in) {
     image_size = (double)image_uncomp_in->dim_x *
@@ -604,8 +601,6 @@ int astc_compress_and_compare(const std::string& profile_str,
     }
   }
 
-  double end_coding_time = get_time();
-
   // Print metrics in comparison mode
   if (false) {
     compute_error_metrics(image_uncomp_in_is_hdr,
@@ -654,4 +649,17 @@ int astc_compress_and_compare(const std::string& profile_str,
 
   delete[] image_comp.data;
   return 0;
+}
+
+int c_astc_compress_and_compare(const char* profile_str,
+                                const char* input_filename,
+                                const char* compressed_output_filename,
+                                const char* decompressed_output_filename,
+                                const char* dimensions_str,
+                                const char* quality_str) {
+  return astc_compress_and_compare(
+      std::string(profile_str), std::string(input_filename),
+      std::string(compressed_output_filename),
+      std::string(decompressed_output_filename), std::string(dimensions_str),
+      std::string(quality_str));
 }
