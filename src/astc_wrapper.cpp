@@ -1,4 +1,4 @@
-#include "astc_pdr.h"
+#include "src/astc_wrapper.h"
 
 #include <cassert>
 #include <cstring>

@@ -1,3 +1,4 @@
+#ifdef __cplusplus
 #include <string>
 
 int astc_compress_and_compare(const std::string& profile_str,
@@ -8,10 +9,15 @@ int astc_compress_and_compare(const std::string& profile_str,
                               const std::string quality_str);
 
 extern "C" {
+#endif
+
 int c_astc_compress_and_compare(const char* profile_str,
                                 const char* input_filename,
                                 const char* compressed_output_filename,
                                 const char* decompressed_output_filename,
                                 const char* dimensions_str,
                                 const char* quality_str);
+
+#ifdef __cplusplus
 }
+#endif
